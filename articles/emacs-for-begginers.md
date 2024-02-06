@@ -118,13 +118,59 @@ Emacs 29.1 からビルトインされているパッケージマネージャで
 - 偽となる値は `nil`
 - 真となる値は `nil` ではない値 (真偽値としては `t` を指定したほうがいいですが)
 
-Emacs の起動時に `init.el` は読み込まれるわけですが、`:ensure` キーワードの引数に `t` が指定されていれば、読み込まれたときにパッケージが読み込まれていなければ自動で読み込んでくれます。`nil` なら読み込まなくていいという指定になります。
+Emacs の起動時に `init.el` は読み込まれるわけですが、`:ensure` キーワードの引数に `t` が指定されていれば、読み込まれたときにパッケージがインストールされていなければ自動でインストールしてくれます。`nil` ならインストールしなくていいという指定になります。
 
 ### `:config` キーワード
 このキーワードは任意の数の引数を取ることができます。ここには Emacs Lisp で記述したプログラムならなんでもかけますが、そのパッケージに関連する設定を書くのが適切です。
 
-
-### その他のキーワード
+:::details その他のキーワード
 その他のキーワードについては [leaf-keywords.el](https://github.com/conao3/leaf-keywords.el) のドキュメントがわかりやすいです。
 とはいえ、最初のうちは `:config` 内にすべて書く運用で問題ないですから、`leaf.el` についてなんとなく理解してきたくらいで見てみるといいと思います。
 
+:::
+
+## 実際に設定ファイルを書いてみる
+`Dashboard.el` というおしゃれなダッシュボードを表示してくれるパッケージがあります。これを leaf.el でインストールしてみましょう。
+
+[Dashboard.el のインストール説明](https://github.com/emacs-dashboard/emacs-dashboard#open-the-dashboard) から引用します。
+
+```emacs-lisp
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+(setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
+```
+
+```emacs-lisp
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard"))
+```
+以上の 2 つは等価な設定となっています。前者は Emacs デフォルトの設定ですが、後者は `use-package` を使った設定です。
+
+これらの設定は leaf.el を使えば
+
+```emacs-lisp
+(leaf dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard"))
+```
+と書き換えることができます。
+
+特に、`use-package` を使った設定については、 `use-package` の部分を `leaf` に書き換えるだけで leaf.el での設定に変えることができます！(先述したとおり leaf.el は use-package の代替となることを目指したパッケージであるからです)
+
+:::details `setq` とは？
+変数に値を代入するときに使います。
+
+今回の設定においては `dashboard.el` 内で定義された `dashboard-banner-logo-title` という変数を変更するために使いました。
+
+```emacs-lisp
+(setq hoge 1)
+```
+とすると、`hoge` に `1` が代入されるわけです。
+
+`setq` はまだ宣言されていない変数に対して使った場合は、その変数を宣言し、値を代入するという挙動を取ります。
+:::
