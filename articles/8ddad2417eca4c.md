@@ -17,18 +17,20 @@ https://github.com/zsh-users/zsh-autosuggestions
 
 https://github.com/zsh-users/zsh/blob/master/Functions/Zle/predict-on
 
+predict-on は割と zsh チュートリアルみたいな記事群で .zshrc にて書かれているのを見たことがあるのですが、実用している人をあまり見たことがありません。
+実際、[Google トレンド](https://trends.google.co.jp/trends/explore?date=all&q=zsh%20predict-on,zsh%20predict%20on,zsh-autosuggestions&hl=ja) を見ていただけたらわかるのですが、流行ったことがほとんどないらしいです。
+
+この記事では、熱狂的な predict-on ユーザーである俺がどのように predict-on を活用しているかを述べ、少しでもユーザーを増やす (= 救う) ことに寄与できればと考えています
+
 ## 簡単な比較
 以下のような挙動の違いから、zsh-autosuggestions のほうが使いやすいとされています。
 ### predict-on
-  - Zshの標準機能で、履歴ベースの予測（補完システムではない）
+  - 履歴ベースの予測（補完システムではない）
+  - 入力の途中で補完されるため、侵襲的
   - 例: `git c` と入力 → 履歴から `git commit -m "fix bug"` を見つけて自動挿入
-  - 入力の途中で補完されるため侵襲的
 
 ### zsh-autosuggestions
-  - サードパーティプラグインで、履歴ベースがデフォルト（補完も選択可）
+  - 履歴ベースがデフォルトだが、補完も選択可能
+  - 右矢印キーで確定、無視も可能で、非侵襲的
   - 例: `git c` と入力 → グレーで `ommit -m "fix bug"` を表示（履歴から）
-  - 右矢印キーで確定、無視も可能で非侵襲的
-  
 
-
-[Google トレンド](https://trends.google.co.jp/trends/explore?date=all&q=zsh%20predict-on,zsh%20predict%20on,zsh-autosuggestions&hl=ja) を見ていただけたらわかるのですが、流行ったことがほとんどないらしいです。
